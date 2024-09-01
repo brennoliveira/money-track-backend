@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserService } from "../Services";
+import { error } from "console";
 
 export class UserController {
   private readonly userService: UserService;
@@ -17,6 +18,20 @@ export class UserController {
       return res.status(201).json(user);
     } catch (error) {
       return res.status(500).json({ error: 'Failed to create user' });
+    }
+  }
+
+  async findUserByEmail(req: Request, res: Response): Promise<Response> {
+    try {
+      const { email } = req.body;
+
+      const user = await this.userService.findUserByEmail(email);
+
+      if (user) return res.status(200).json(user);
+
+      return res.status(404).json({ error: "User not found" });
+    } catch (error) {
+      return res.status(500).json({ error: "Failed to retrieve user" });
     }
   }
 }

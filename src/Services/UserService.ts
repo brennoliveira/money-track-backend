@@ -19,4 +19,10 @@ export class UserService {
 
     return user;
   }
+
+  async findUserByEmail(email: string): Promise<UserDTO | null> {
+    const user = this.userRepository.findUserByEmail(email);
+
+    return user;
+  }
 }
