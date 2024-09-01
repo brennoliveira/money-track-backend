@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "clean": "rm -rf ./dist"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,8 @@
   "dependencies": {
     "@prisma/client": "^5.19.0",
     "bcrypt": "^5.1.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "money-track-backend": "file:"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
