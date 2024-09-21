@@ -5,6 +5,7 @@ import { UserDTO } from "../../Models/entities";
 export class UserMapper implements Mapper<UserDTO, UserPrisma> {
   toDTO(persistence: UserPrisma): UserDTO {
     return new UserDTO({
+      id        : persistence.id,
       email     : persistence.email,
       balance   : persistence.balance,
       password  : persistence.password,

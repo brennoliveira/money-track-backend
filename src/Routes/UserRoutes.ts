@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { UserController } from "../Controllers";
+import { CategoryController, UserController } from "../Controllers";
 
 const router = Router();
 
 const userController = new UserController();
+const categoryController = new CategoryController();
 
-//User Routes
+//-------User Routes--------//
 
 //POST
 router.post('/users', userController.createUser.bind(userController));
@@ -13,6 +14,14 @@ router.post('/users', userController.createUser.bind(userController));
 //GET
 router.get('/users', userController.findUserByEmail.bind(userController));
 
-//Transaction Routes
+//-------User Routes--------//
+
+//-------Category Routes--------//
+
+//POST
+router.post('/users/:userId/categories', categoryController.createCategory.bind(categoryController));
+
+//GET
+router.get('/users/:userId/categories', categoryController.findCategoriesByUser.bind(categoryController));
 
 export default router;
