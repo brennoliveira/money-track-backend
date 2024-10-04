@@ -9,7 +9,7 @@ export class CategoryRepository extends Repositoy implements ICategoryRepository
 
   async getCategoryById(id: number, userId: number): Promise<CategoryDTO | null> {
     try {
-      const category = await this.repository.findUnique({
+      const category = await this.repository.findUniqueOrThrow({
         where: {
           id,
           userId,

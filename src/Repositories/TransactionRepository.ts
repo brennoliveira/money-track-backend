@@ -23,7 +23,7 @@ export class TransactionRepository extends Repositoy implements ITransactionRepo
 
   async getTransaction(userId: number, transactionId: number): Promise<TransactionDTO | null> {
     try {
-      const transaction = await this.repository.findFirst({
+      const transaction = await this.repository.findUniqueOrThrow({
         where: {
           userId,
           id: transactionId,
