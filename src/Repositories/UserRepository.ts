@@ -29,4 +29,31 @@ export class UserRepository extends Repositoy implements IUserRepository {
     });
     return this.userMapper.toDTO(user);
   }
+
+  async findUserById(userId: number): Promise<UserDTO | null> {
+    try {
+      const user = await this.repository.findFirst({
+        where: {
+          id: userId,
+        }
+      });
+
+      return user ? this.userMapper.toDTO(user) : null;
+    } catch (error) {
+      throw new Error(`${error}`); 
+    }
+  }
+
+  async updateBalance(userId: number, amount: number): Promise<undefined> {
+    try {
+      const user = await this.repository.findFirst({ where: { id: userId } });
+      await this.repository.update({
+        where: { id: userId },
+        data: { balance: amount += Number(user?.balance) }
+      });
+
+    } catch (error) {
+      throw new Error(`${error}`); 
+    }
+  }
 }

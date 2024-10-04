@@ -34,4 +34,18 @@ export class UserController {
       return res.status(500).json({ error: "Failed to retrieve user" });
     }
   }
+
+  async findUserById(req: Request, res: Response): Promise<Response> {
+    try {
+      const { userId } = req.body;
+
+      const user = await this.userService.findUserById(userId);
+
+      if (user) return res.status(200).json(user);
+
+      return res.status(404).json({ error: "User not found" });
+    } catch (error) {
+      return res.status(500).json({ error: "Failed to retrieve user" });
+    }
+  }
 }

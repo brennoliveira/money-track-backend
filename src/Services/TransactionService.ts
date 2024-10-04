@@ -1,13 +1,15 @@
 import { TransactionDTO } from "../Models/entities";
 import { TransactionTypes } from "../Models/enums";
-import { TransactionRepository } from "../Repositories";
+import { TransactionRepository, UserRepository } from "../Repositories";
 import { CheckAmount } from "../Utils";
 
 export class TransactionService {
   private readonly transactionRepository: TransactionRepository;
+  private readonly userRepository: UserRepository;
 
   constructor() {
     this.transactionRepository = new TransactionRepository();
+    this.userRepository = new UserRepository();
   }
 
   async getUserTransactions(userId: number): Promise<TransactionDTO[] | null> {
@@ -36,6 +38,8 @@ export class TransactionService {
     });
 
     if (!transaction) throw new Error('Not able to create transaction');
+
+    await this.userRepository.updateBalance(tr.userId, amount);
 
     return transaction;
   }

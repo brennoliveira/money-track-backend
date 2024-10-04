@@ -25,4 +25,12 @@ export class UserService {
 
     return user;
   }
+
+  async findUserById(userId: number): Promise<UserDTO | null> {
+    const user = this.userRepository.findUserById(userId);
+
+    if (!user) throw new Error(`User not found`);
+
+    return user;
+  }
 }
