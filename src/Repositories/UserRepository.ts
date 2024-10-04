@@ -11,7 +11,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
   private readonly userMapper = new UserMapper();
 
   async findUserByEmail(email: string): Promise<UserDTO | null> {
-    const user = await this.repository.findUnique({
+    const user = await this.repository.findUniqueOrThrow({
       where: {
         email,
       }
@@ -32,7 +32,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
 
   async findUserById(userId: number): Promise<UserDTO | null> {
     try {
-      const user = await this.repository.findFirst({
+      const user = await this.repository.findUniqueOrThrow({
         where: {
           id: userId,
         }
@@ -44,9 +44,23 @@ export class UserRepository extends Repositoy implements IUserRepository {
     }
   }
 
+  async getUserBalance(userId: number): Promise<number | null> {
+    try {
+      const user = await this.repository.findUniqueOrThrow({
+        where: {
+          id: userId,
+        }
+      });
+
+      return user ? user.balance : null;
+    } catch (error) {
+      throw new Error(`${error}`);
+    }
+  }
+
   async updateBalance(userId: number, amount: number): Promise<undefined> {
     try {
-      const user = await this.repository.findFirst({ where: { id: userId } });
+      const user = await this.repository.findUniqueOrThrow({ where: { id: userId } });
       await this.repository.update({
         where: { id: userId },
         data: { balance: amount += Number(user?.balance) }

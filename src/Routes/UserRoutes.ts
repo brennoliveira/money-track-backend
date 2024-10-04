@@ -15,6 +15,7 @@ router.post('/users', userController.createUser.bind(userController));
 //GET
 router.get('/users', userController.findUserByEmail.bind(userController));
 router.get('/users/:userId', userController.findUserById.bind(userController));
+router.get(`users/:userId/balance`, userController.getUserBalance.bind(userController));
 
 //-------User Routes--------//
 
