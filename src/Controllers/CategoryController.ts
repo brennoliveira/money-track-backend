@@ -8,6 +8,7 @@ export class CategoryController {
     this.categoryService = new CategoryService();
   }
 
+  //No Route Yet
   async findCategoryById(req: Request, res: Response): Promise<Response> {
     try {
       const { categoryId, userId } = req.body;
@@ -22,9 +23,9 @@ export class CategoryController {
 
   async findCategoriesByUser(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId } = req.body;
+      const userId = req.user?.userId;
 
-      const categories = await this.categoryService.findCategoriesByUser(userId);
+      const categories = await this.categoryService.findCategoriesByUser(Number(userId));
 
       return res.status(200).json(categories);
     } catch (error) {
@@ -35,7 +36,7 @@ export class CategoryController {
   async createCategory(req: Request, res: Response): Promise<Response> {
     try {
       const { name } = req.body;
-      const { userId } = req.params;
+      const userId = req.user?.userId;
 
       const category = await this.categoryService.createCategory(name, Number(userId));
 

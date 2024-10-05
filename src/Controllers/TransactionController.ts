@@ -11,7 +11,7 @@ export class TransactionController {
 
   async getUserTransactions(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId } = req.params;
+      const userId = req.user?.userId;
 
       const transactions = await this.transactionService.getUserTransactions(Number(userId));
 
@@ -25,7 +25,8 @@ export class TransactionController {
 
   async getTransaction(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId, transactionId } = req.params;
+      const { transactionId } = req.params;
+      const userId = req.user?.userId;
 
       const transaction = await this.transactionService.getTransaction(Number(userId), Number(transactionId));
 
@@ -39,7 +40,7 @@ export class TransactionController {
     try {
       const { amount, type, categoryId } = req.body;
       
-      const { userId } = req.params;
+      const userId = req.user?.userId;
 
       const transaction = await this.transactionService.createTransaction({
         amount,
@@ -56,7 +57,8 @@ export class TransactionController {
 
   async deleteTransaction(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId, transactionId } = req.params;
+      const { transactionId } = req.params;
+      const userId = req.user?.userId;
 
       await this.transactionService.deleteTransaction(Number(userId), Number(transactionId));
 

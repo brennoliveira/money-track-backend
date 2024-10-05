@@ -34,7 +34,7 @@ export class UserService {
     return user;
   }
 
-  async getUserBalance(userId: number): Promise<number | null> {
+  async getUserBalance(userId: number): Promise<number> {
     const balance = this.userRepository.getUserBalance(userId);
 
     if (!balance) throw new Error(`Balance not found`);

@@ -44,7 +44,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
     }
   }
 
-  async getUserBalance(userId: number): Promise<number | null> {
+  async getUserBalance(userId: number): Promise<number> {
     try {
       const user = await this.repository.findUniqueOrThrow({
         where: {
@@ -52,7 +52,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
         }
       });
 
-      return user ? user.balance : null;
+      return user.balance;
     } catch (error) {
       throw new Error(`${error}`);
     }

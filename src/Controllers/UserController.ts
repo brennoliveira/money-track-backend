@@ -1,12 +1,34 @@
 import { Request, Response } from "express";
 import { UserService } from "../Services";
-import { error } from "console";
+import { BcryptService, JWTService } from "../Utils";
 
 export class UserController {
   private readonly userService: UserService;
+  private readonly bcryptService: BcryptService;
+  private readonly jwtService: JWTService;
 
   constructor() {
     this.userService = new UserService();
+    this.bcryptService = new BcryptService();
+    this.jwtService = new JWTService();
+  }
+
+  async login(req: Request, res: Response): Promise<Response> {
+    const { email, password } = req.body;
+
+    try {
+      const user = await this.userService.findUserByEmail(email);
+      if (!user) return res.status(400).json({ message: 'Invalid email or password' });
+
+      const isPasswordValid = await this.bcryptService.compareValues(password, String(user.password));
+      if (!isPasswordValid) return res.status(400).json({ message: 'Invalid email or password' });
+
+      const token = this.jwtService.generateToken(Number(user.id));
+
+      return res.status(200).json({ token });
+    } catch (error) {
+      return res.status(500).json({ message: 'Error during login' });
+    }
   }
 
   async createUser(req: Request, res: Response): Promise<Response> {
@@ -15,7 +37,9 @@ export class UserController {
 
       const user = await this.userService.createUser(email, password);
 
-      return res.status(201).json(user);
+      const token = this.jwtService.generateToken(Number(user.id));
+
+      return res.status(201).json({token});
     } catch (error) {
       return res.status(500).json({ error: 'Failed to create user' });
     }
@@ -37,7 +61,7 @@ export class UserController {
 
   async findUserById(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId } = req.params;
+      const userId = req.user?.userId;
 
       const user = await this.userService.findUserById(Number(userId));
 
@@ -51,13 +75,11 @@ export class UserController {
 
   async getUserBalance(req: Request, res: Response): Promise<Response> {
     try {
-      const { userId } = req.params;
+      const userId = req.user?.userId;
 
       const balance = await this.userService.getUserBalance(Number(userId));
 
-      if (balance) return res.status(200).json(balance);
-
-      return res.status(404).json({ error: "Balance not found" });
+      return res.status(200).json({balance: `R$${balance}`});
     } catch (error) {
       return res.status(500).json({ error: "Failed to retrieve balance" });
     }
