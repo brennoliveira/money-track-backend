@@ -17,29 +17,29 @@ router.post('/login', userController.login.bind(userController));
 //GET
 router.get('/users', userController.findUserByEmail.bind(userController));
 router.get('/users/:userId', userController.findUserById.bind(userController));
-router.get(`/users/balance`, authenticateToken, userController.getUserBalance.bind(userController));
+router.get(`/balance`, authenticateToken, userController.getUserBalance.bind(userController));
 
 //-------User Routes--------//
 
 //-------Category Routes--------//
 
 //POST
-router.post('/users/categories', authenticateToken, categoryController.createCategory.bind(categoryController));
+router.post('/categories', authenticateToken, categoryController.createCategory.bind(categoryController));
 
 //GET
-router.get('/users/categories', authenticateToken, categoryController.findCategoriesByUser.bind(categoryController));
+router.get('/categories', authenticateToken, categoryController.findCategoriesByUser.bind(categoryController));
 
 //-------Transaction Routes--------//
 
 //POST
-router.post('/users/transactions', authenticateToken, transactionController.createTransaction.bind(transactionController));
+router.post('/transactions', authenticateToken, transactionController.createTransaction.bind(transactionController));
 
 //GET
-router.get('/users/transactions', authenticateToken, transactionController.getUserTransactions.bind(transactionController));
-router.get('/users/transactions/:transactionId', authenticateToken, transactionController.getTransaction.bind(transactionController));
+router.get('/transactions', authenticateToken, transactionController.getUserTransactions.bind(transactionController));
+router.get('/transactions/:transactionId', authenticateToken, transactionController.getTransaction.bind(transactionController));
 
 //DELETE
-router.delete('/users/transactions/:transactionId', authenticateToken, transactionController.deleteTransaction.bind(transactionController));
+router.delete('/transactions/:transactionId', authenticateToken, transactionController.deleteTransaction.bind(transactionController));
 
 //-------Transaction Routes--------//
 
