@@ -4,7 +4,7 @@ import { CategoryMapper } from "./mappers";
 import { Repositoy } from "./Repository";
 
 export class CategoryRepository extends Repositoy implements ICategoryRepository {
-  private readonly repository = this.getRepository().category;
+  private readonly repository = this.getRepository().categories;
   private readonly categoryMapper = new CategoryMapper();
 
   async getCategoryById(id: number, userId: number): Promise<CategoryDTO | null> {

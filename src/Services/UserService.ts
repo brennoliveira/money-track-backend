@@ -11,11 +11,11 @@ export class UserService {
     this.bcryptService  = new BcryptService();
   }
 
-  async createUser(email: string, password: string): Promise<UserDTO> {
+  async createUser(name: string, email: string, password: string): Promise<UserDTO> {
 
     const hashedPassword = this.bcryptService.encrypt(password);
 
-    const user = await this.userRepository.createUser(email, hashedPassword);
+    const user = await this.userRepository.createUser(name, email, hashedPassword);
 
     return user;
   }

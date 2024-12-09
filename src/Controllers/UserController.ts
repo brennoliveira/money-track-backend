@@ -33,9 +33,9 @@ export class UserController {
 
   async createUser(req: Request, res: Response): Promise<Response> {
     try {
-      const {email, password} = req.body;
+      const {name, email, password} = req.body;
 
-      const user = await this.userService.createUser(email, password);
+      const user = await this.userService.createUser(name, email, password);
 
       const token = this.jwtService.generateToken(Number(user.id));
 

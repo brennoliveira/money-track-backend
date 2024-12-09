@@ -13,25 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id           Int            @id @default(autoincrement())
+  name         String
   email        String         @unique
   password     String
   balance      Float          @default(0)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   transactions Transactions[]
-  categories   Category[]
+  categories   Categories[]
 }
 
-model Category {
+model Categories {
   id           Int            @id @default(autoincrement())
   name         String
   createdAt    DateTime       @default(now())
   userId       Int
   transactions Transactions[]
 
-  user User @relation(fields: [userId], references: [id])
+  user Users @relation(fields: [userId], references: [id])
 }
 
 model Transactions {
@@ -43,6 +44,6 @@ model Transactions {
   userId     Int
   categoryId Int
 
-  user     User     @relation(fields: [userId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  user     Users      @relation(fields: [userId], references: [id])
+  category Categories @relation(fields: [categoryId], references: [id])
 }
