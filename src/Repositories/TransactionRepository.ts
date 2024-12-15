@@ -12,6 +12,9 @@ export class TransactionRepository extends Repositoy implements ITransactionRepo
       const transactions = await this.repository.findMany({
         where: {
           userId,
+        },
+        include: {
+          category: true,
         }
       });
 
