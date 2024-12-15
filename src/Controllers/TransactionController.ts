@@ -15,8 +15,6 @@ export class TransactionController {
 
       const transactions = await this.transactionService.getUserTransactions(Number(userId));
 
-      if (!transactions) return res.status(404).json({ error: 'Transactions not found' });
-
       return res.status(200).json(transactions);
     } catch (error) {
       return res.status(500).json({ error: 'Failed to retrieve transactions' });
@@ -39,7 +37,7 @@ export class TransactionController {
   async createTransaction(req: Request, res: Response): Promise<Response> {
     try {
       const { amount, type, categoryId } = req.body;
-      
+
       const userId = req.user?.userId;
 
       const transaction = await this.transactionService.createTransaction({
