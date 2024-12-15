@@ -42,7 +42,12 @@ export class TransactionRepository extends Repositoy implements ITransactionRepo
   async createTransaction(tr: TransactionDTO): Promise<TransactionDTO> {
     try {
       const transaction = await this.repository.create({
-        data: tr,
+        data: {
+          amount     : tr.amount,
+          type       : tr.type,
+          userId     : tr.userId,
+          categoryId : tr.categoryId,
+        },
       });
 
       return this.transactionMapper.toDTO(transaction);

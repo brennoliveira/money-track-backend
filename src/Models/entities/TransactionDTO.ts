@@ -1,5 +1,7 @@
 import { TransactionTypes } from "../enums";
 import { ITransactionDTO } from "../interfaces";
+import { CategoryDTO } from "./CategoryDTO";
+import { UserDTO } from "./UserDTO";
 
 export class TransactionDTO implements ITransactionDTO {
   id?        : number;
@@ -10,6 +12,9 @@ export class TransactionDTO implements ITransactionDTO {
   userId     : number;
   categoryId : number;
 
+  user?      : UserDTO;
+  category?  : CategoryDTO;
+
   constructor(transaction: TransactionDTO) {
     this.id         = transaction.id;
     this.amount     = transaction.amount;
@@ -18,5 +23,7 @@ export class TransactionDTO implements ITransactionDTO {
     this.updatedAt  = transaction.updatedAt;
     this.userId     = transaction.userId;
     this.categoryId = transaction.categoryId;
+    this.user       = transaction.user;
+    this.category   = transaction.category;
   }
 }
