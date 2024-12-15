@@ -37,9 +37,9 @@ export class UserController {
 
       const user = await this.userService.createUser(name, email, password);
 
-      const token = this.jwtService.generateToken(Number(user.id));
+      // const token = this.jwtService.generateToken(Number(user.id));
 
-      return res.status(201).json({token});
+      return res.status(201).json({ message: "User Registered" });
     } catch (error) {
       return res.status(500).json({ error: 'Failed to create user' });
     }

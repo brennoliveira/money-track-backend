@@ -21,6 +21,7 @@ router.get(`/balance`, authenticateToken, userController.getUserBalance.bind(use
 
 //-------User Routes--------//
 
+
 //-------Category Routes--------//
 
 //POST
@@ -28,6 +29,9 @@ router.post('/categories', authenticateToken, categoryController.createCategory.
 
 //GET
 router.get('/categories', authenticateToken, categoryController.findCategoriesByUser.bind(categoryController));
+
+//-------Category Routes--------//
+
 
 //-------Transaction Routes--------//
 
@@ -42,5 +46,6 @@ router.get('/transactions/:transactionId', authenticateToken, transactionControl
 router.delete('/transactions/:transactionId', authenticateToken, transactionController.deleteTransaction.bind(transactionController));
 
 //-------Transaction Routes--------//
+
 
 export default router;
