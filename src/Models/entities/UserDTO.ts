@@ -2,6 +2,7 @@ import { IUserDTO } from "../interfaces";
 
 export class UserDTO implements IUserDTO{
   id?        : number;
+  name       : string;
   email      : string;
   password?  : string;
   balance    : number;
@@ -10,6 +11,7 @@ export class UserDTO implements IUserDTO{
 
   constructor(user: UserDTO) {
     this.id        = user.id;
+    this.name      = user.name;
     this.email     = user.email;
     this.password  = user.password;
     this.balance   = user.balance;
