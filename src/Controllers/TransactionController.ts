@@ -41,10 +41,10 @@ export class TransactionController {
       const userId = req.user?.userId;
 
       const transaction = await this.transactionService.createTransaction({
-        amount,
+        amount: Number(amount),
         type: type as TransactionTypes,
         userId: Number(userId),
-        categoryId,
+        categoryId: Number(categoryId),
         transactionDate: new Date(transactionDate),
       });
 
