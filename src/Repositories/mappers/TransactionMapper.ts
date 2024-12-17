@@ -4,7 +4,7 @@ import { Mapper } from "./IMapper";
 import { TransactionTypes } from "../../Models/enums";
 import { CategoryMapper } from "./CategoryMapper";
 
-type FullCategoryPrisma = TransactionPrisma & {
+type FullTransactionPrisma = TransactionPrisma & {
   category? : CategoryPrisma,
 }
 
@@ -15,14 +15,16 @@ export class TransactionMapper implements Mapper<TransactionDTO, TransactionPris
     this.categoryMapper = new CategoryMapper();
   }
 
-  toDTO(persistence: FullCategoryPrisma): TransactionDTO {
+  toDTO(persistence: FullTransactionPrisma): TransactionDTO {
     //TODO: Use CategoryMapper
     // const category = persistence.category ? this.categoryMapper.toDTO(persistence.category) : undefined;
     return new TransactionDTO({
       id              : persistence.id,
+      title           : persistence.title,
       amount          : persistence.amount,
       type            : persistence.type as TransactionTypes,
       transactionDate : persistence.transactionDate,
+      description     : persistence.description || undefined,
       createdAt       : persistence.createdAt,
       userId          : persistence.userId,
       categoryId      : persistence.categoryId,
@@ -31,7 +33,7 @@ export class TransactionMapper implements Mapper<TransactionDTO, TransactionPris
     });
   }
 
-  toDTOList(persistence: FullCategoryPrisma[]): TransactionDTO[] {
+  toDTOList(persistence: FullTransactionPrisma[]): TransactionDTO[] {
     return persistence.map(this.toDTO);
   }
 }

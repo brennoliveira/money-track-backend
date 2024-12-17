@@ -5,8 +5,10 @@ import { UserDTO } from "./UserDTO";
 
 export class TransactionDTO implements ITransactionDTO {
   id?             : number;
+  title           : string;
   amount          : number;
   type            : TransactionTypes;
+  description?    : string;
   transactionDate : Date;
   createdAt?      : Date;
   updatedAt?      : Date;
@@ -18,9 +20,11 @@ export class TransactionDTO implements ITransactionDTO {
 
   constructor(transaction: TransactionDTO) {
     this.id              = transaction.id;
+    this.title           = transaction.title;
     this.amount          = transaction.amount;
     this.type            = transaction.type;
     this.transactionDate = transaction.transactionDate;
+    this.description     = transaction.description;
     this.createdAt       = transaction.createdAt;
     this.updatedAt       = transaction.updatedAt;
     this.userId          = transaction.userId;

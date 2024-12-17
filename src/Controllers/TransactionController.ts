@@ -36,16 +36,18 @@ export class TransactionController {
 
   async createTransaction(req: Request, res: Response): Promise<Response> {
     try {
-      const { amount, type, categoryId, transactionDate } = req.body;
+      const { title, amount, type, categoryId, transactionDate, description } = req.body;
 
       const userId = req.user?.userId;
 
       const transaction = await this.transactionService.createTransaction({
+        title,
         amount: Number(amount),
         type: type as TransactionTypes,
         userId: Number(userId),
         categoryId: Number(categoryId),
         transactionDate: new Date(transactionDate),
+        description,
       });
 
       return res.status(201).json(transaction);

@@ -37,8 +37,10 @@ model Categories {
 
 model Transactions {
   id              Int      @id @default(autoincrement())
+  title           String
   amount          Float
   type            String
+  description     String?
   transactionDate DateTime @default(now())
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
