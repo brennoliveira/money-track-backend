@@ -19,14 +19,15 @@ export class TransactionMapper implements Mapper<TransactionDTO, TransactionPris
     //TODO: Use CategoryMapper
     // const category = persistence.category ? this.categoryMapper.toDTO(persistence.category) : undefined;
     return new TransactionDTO({
-      id         : persistence.id,
-      amount     : persistence.amount,
-      type       : persistence.type as TransactionTypes,
-      createdAt  : persistence.createdAt,
-      userId     : persistence.userId,
-      categoryId : persistence.categoryId,
+      id              : persistence.id,
+      amount          : persistence.amount,
+      type            : persistence.type as TransactionTypes,
+      transactionDate : persistence.transactionDate,
+      createdAt       : persistence.createdAt,
+      userId          : persistence.userId,
+      categoryId      : persistence.categoryId,
       
-      category   : persistence.category,
+      category        : persistence.category,
     });
   }
 

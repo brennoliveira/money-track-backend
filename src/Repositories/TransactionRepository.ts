@@ -43,10 +43,11 @@ export class TransactionRepository extends Repositoy implements ITransactionRepo
     try {
       const transaction = await this.repository.create({
         data: {
-          amount     : tr.amount,
-          type       : tr.type,
-          userId     : tr.userId,
-          categoryId : tr.categoryId,
+          amount          : tr.amount,
+          type            : tr.type,
+          userId          : tr.userId,
+          categoryId      : tr.categoryId,
+          transactionDate : tr.transactionDate,
         },
       });
 

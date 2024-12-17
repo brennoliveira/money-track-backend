@@ -36,13 +36,14 @@ model Categories {
 }
 
 model Transactions {
-  id         Int      @id @default(autoincrement())
-  amount     Float
-  type       String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  userId     Int
-  categoryId Int
+  id              Int      @id @default(autoincrement())
+  amount          Float
+  type            String
+  transactionDate DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  userId          Int
+  categoryId      Int
 
   user     Users      @relation(fields: [userId], references: [id])
   category Categories @relation(fields: [categoryId], references: [id])

@@ -7,7 +7,7 @@ export class JWTService {
   generateToken(userId: number): string {
     const payload = { userId };
   
-    const token = jwt.sign(payload, this.SECRET_KEY, { expiresIn: '2h' });
+    const token = jwt.sign(payload, this.SECRET_KEY, { expiresIn: '24h' });
   
     return token;
   }
