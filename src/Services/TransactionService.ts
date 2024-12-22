@@ -45,6 +45,8 @@ export class TransactionService {
   }
 
   async deleteTransaction(userId: number, transactionId: number): Promise<undefined> {
-    await this.transactionRepository.deleteTransaction(userId, transactionId);
+    const amount = await this.transactionRepository.deleteTransaction(userId, transactionId);
+
+    await this.userRepository.updateBalance(userId, -amount);
   }
 }

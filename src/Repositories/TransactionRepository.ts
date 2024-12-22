@@ -1,4 +1,5 @@
 import { TransactionDTO } from "../Models/entities";
+import { TransactionTypes } from "../Models/enums";
 import { ITransactionRepository } from "./interfaces";
 import { TransactionMapper } from "./mappers";
 import { Repositoy } from "./Repository";
@@ -58,15 +59,16 @@ export class TransactionRepository extends Repositoy implements ITransactionRepo
     }
   }
 
-  async deleteTransaction(userId: number, transactionId: number): Promise<undefined> {
+  async deleteTransaction(userId: number, transactionId: number): Promise<number> {
     try {
-      await this.repository.delete({
+      const res = await this.repository.delete({
         where: {
           userId,
           id: transactionId,
         }
       });
 
+      return res.amount;
     } catch (error) {
       throw new Error(`${error}`);
     }
