@@ -49,4 +49,33 @@ export class TransactionService {
 
     await this.userRepository.updateBalance(userId, -amount);
   }
+
+  async updateTransaction(userId: number, transaction: TransactionDTO): Promise<void> {
+
+    const originalTransaction = await this.getTransaction(Number(userId), Number(transaction.id));
+    
+    
+    if (!originalTransaction) throw new Error("Transação não encontrada");
+    
+    const originalAmount = CheckAmount(originalTransaction.amount, originalTransaction.type);
+    
+    const updatedAmount = CheckAmount(transaction.amount, transaction.type || originalTransaction.type);
+    
+    const balanceAdjustment = updatedAmount - originalAmount;
+    
+    await this.transactionRepository.updateTransaction(userId, {
+      id: originalTransaction.id,
+      title: transaction.title || originalTransaction.title,
+      amount: updatedAmount,
+      type: transaction.type as TransactionTypes || originalTransaction.type,
+      categoryId: Number(transaction.categoryId) || originalTransaction.categoryId,
+      userId: Number(userId),
+      description: transaction.description || originalTransaction.description,
+      //TODO: atualizar data não funciona
+      transactionDate: transaction.transactionDate || originalTransaction.transactionDate,
+    });
+    console.log(1)
+
+    await this.userRepository.updateBalance(userId, balanceAdjustment);
+  }
 }

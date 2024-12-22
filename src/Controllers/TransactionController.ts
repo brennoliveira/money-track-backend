@@ -67,4 +67,27 @@ export class TransactionController {
       return res.status(500).json({ error });
     }
   }
+
+  async updateTransaction(req: Request, res: Response): Promise<Response> {
+    try {
+      const { title, amount, type, categoryId, transactionDate, description } = req.body;
+      const { transactionId } = req.params;
+      const userId = req.user?.userId;
+
+      await this.transactionService.updateTransaction(Number(userId), {
+        id: Number(transactionId),
+        title,
+        amount: Number(amount),
+        description,
+        categoryId: Number(categoryId),
+        transactionDate: new Date(transactionDate),
+        type: type as TransactionTypes,
+        userId: Number(userId),
+      })
+
+      return res.status(201).json({ message: "Transação editada" }); 
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
+  }
 }

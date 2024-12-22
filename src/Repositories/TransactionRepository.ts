@@ -73,4 +73,26 @@ export class TransactionRepository extends Repositoy implements ITransactionRepo
       throw new Error(`${error}`);
     }
   }
+
+  async updateTransaction(userId: number, transaction: TransactionDTO): Promise<number> {
+    try {
+      const res = await this.repository.update({
+        where: {
+          userId,
+          id: transaction.id,
+        },
+        data: {
+          amount: transaction.amount,
+          description: transaction.description,
+          title: transaction.title,
+          transactionDate: transaction.transactionDate,
+          type: transaction.type,
+          updatedAt: new Date(),
+        }
+      });
+      return res.amount;
+    } catch (error) {
+      throw new Error(`${error}`);
+    }
+  }
 }

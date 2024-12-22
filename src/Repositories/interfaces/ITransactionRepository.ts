@@ -5,4 +5,5 @@ export interface ITransactionRepository {
   getTransaction(userId: number, transactionId: number): Promise<TransactionDTO | null>;
   createTransaction(transaction: TransactionDTO): Promise<TransactionDTO>;
   deleteTransaction(userId: number, transactionId: number): Promise<number>;
+  updateTransaction(userId: number, transaction: TransactionDTO): Promise<number>;
 }

@@ -45,6 +45,9 @@ router.get('/transactions/:transactionId', authenticateToken, transactionControl
 //DELETE
 router.delete('/transactions/:transactionId', authenticateToken, transactionController.deleteTransaction.bind(transactionController));
 
+//PUT
+router.put('/transactions/:transactionId', authenticateToken, transactionController.updateTransaction.bind(transactionController)); 
+
 //-------Transaction Routes--------//
 
 
