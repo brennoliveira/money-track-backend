@@ -1,14 +1,16 @@
 import { UserDTO } from '../Models/entities';
-import { UserRepository } from '../Repositories';
+import { CategoryRepository, UserRepository } from '../Repositories';
 import { BcryptService } from '../Utils';
 
 export class UserService {
-  private readonly userRepository: UserRepository;
-  private readonly bcryptService: BcryptService;
+  private readonly userRepository     : UserRepository;
+  private readonly categoryRepository : CategoryRepository;
+  private readonly bcryptService      : BcryptService;
 
   constructor(){
-    this.userRepository = new UserRepository();
-    this.bcryptService  = new BcryptService();
+    this.userRepository     = new UserRepository();
+    this.categoryRepository = new CategoryRepository();
+    this.bcryptService      = new BcryptService();
   }
 
   async createUser(name: string, email: string, password: string): Promise<UserDTO> {
@@ -16,6 +18,9 @@ export class UserService {
     const hashedPassword = this.bcryptService.encrypt(password);
 
     const user = await this.userRepository.createUser(name, email, hashedPassword);
+
+    //TODO: ver um jeito melhor de setar categorias iniciais
+    if (user) await this.categoryRepository.createCategory('Compras', user.id)
 
     return user;
   }
