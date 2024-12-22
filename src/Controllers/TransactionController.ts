@@ -62,8 +62,7 @@ export class TransactionController {
       const userId = req.user?.userId;
 
       await this.transactionService.deleteTransaction(Number(userId), Number(transactionId));
-
-      return res.status(201);
+      return res.status(201).json({ message: "Transação excluída" });
     } catch (error) {
       return res.status(500).json({ error });
     }
