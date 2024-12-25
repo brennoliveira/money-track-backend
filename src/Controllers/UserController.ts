@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../Services";
-import { BcryptService, JWTService } from "../Utils";
+import { BcryptService } from "../Utils";
+import JWTService from "../Utils/JWT";
 
 export class UserController {
   private readonly userService: UserService;
