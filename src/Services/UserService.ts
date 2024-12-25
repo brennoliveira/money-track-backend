@@ -20,8 +20,10 @@ export class UserService {
     const user = await this.userRepository.createUser(name, email, hashedPassword);
 
     //TODO: ver um jeito melhor de setar categorias iniciais
-    if (user) await this.categoryRepository.createCategory('Compras', user.id)
-
+    if (user) {
+      await this.categoryRepository.createCategory('Compras', user.id)
+      await this.categoryRepository.createCategory('Salário', user.id)
+    }
     return user;
   }
 
