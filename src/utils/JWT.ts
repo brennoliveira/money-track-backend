@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from '../Models/types';
 
-class JWTService {
+export class JWTService {
   private readonly SECRET_KEY = process.env.SECRET_KEY || '';
 
   generateToken(userId: number): string {
@@ -18,5 +18,3 @@ class JWTService {
     return decoded;
   }
 }
-
-export default JWTService

@@ -11,5 +11,3 @@ export class BcryptService {
     return bcrypt.compare(value, hashedValue);
   }
 }
-
-export default BcryptService;
