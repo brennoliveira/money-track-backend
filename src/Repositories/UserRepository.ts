@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { IUserRepository } from './interfaces';
 import { UserMapper } from './mappers';
 import { UserDTO } from '../Models/entities';
+import { InternalServerError } from '../Errors';
 
 export class UserRepository extends Repositoy implements IUserRepository {
   private readonly repository = this.getRepository().users;
@@ -39,7 +40,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
 
       return user ? this.userMapper.toDTO(user) : null;
     } catch (error) {
-      throw new Error(`${error}`); 
+      throw new InternalServerError(`${error}`); 
     }
   }
 
@@ -53,7 +54,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
 
       return user?.balance ?? 0;
     } catch (error) {
-      throw new Error(`${error}`);
+      throw new InternalServerError(`${error}`);
     }
   }
 
@@ -67,7 +68,7 @@ export class UserRepository extends Repositoy implements IUserRepository {
         });
       }
     } catch (error) {
-      throw new Error(`${error}`);
+      throw new InternalServerError(`${error}`);
     }
   }
 
