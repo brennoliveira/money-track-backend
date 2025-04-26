@@ -1,29 +1,30 @@
 import { NextFunction, Request, Response } from "express";
 import { JWTService } from "../Utils";
+import { UnauthorizedError } from "../Errors";
 
-const jwtSerivce: JWTService = new JWTService(); 
+const jwtService = new JWTService();
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction) {
   try {
-    // Extrair o token do cabeçalho Authorization
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.status(401).json({ message: "Access Denied: No Authorization Header!" });
+      throw new UnauthorizedError("Access denied: No Authorization header provided.");
     }
 
-    const token = authHeader.split(" ")[1];
+    const [, token] = authHeader.split(" ");
     if (!token) {
-      return res.status(401).json({ message: "Access Denied: No Token Provided!" });
+      throw new UnauthorizedError("Access denied: No token provided.");
     }
 
-    // Verificar e decodificar o token
-    const decoded = jwtSerivce.verifyToken(token);
+    const decoded = jwtService.verifyToken(token);
 
-    // Adicionar o payload decodificado na requisição
     req.user = decoded;
     next();
   } catch (error) {
-    console.error("Authentication Error:", error);
-    return res.status(403).json({ message: "Invalid or Expired Token" });
+    if (error instanceof UnauthorizedError) {
+      next(error);
+    } else {
+      next(new UnauthorizedError("Invalid or expired token."));
+    }
   }
 }
