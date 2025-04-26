@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { TransactionService } from "../Services";
 import { TransactionTypes } from "../Models/enums";
 
@@ -9,35 +9,30 @@ export class TransactionController {
     this.transactionService = new TransactionService();
   }
 
-  async getUserTransactions(req: Request, res: Response): Promise<Response> {
+  async getUserTransactions(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const userId = req.user?.userId;
-
       const transactions = await this.transactionService.getUserTransactions(Number(userId));
-
       return res.status(200).json(transactions);
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to retrieve transactions' });
+      next(error);
     }
   }
 
-  async getTransaction(req: Request, res: Response): Promise<Response> {
+  async getTransaction(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { transactionId } = req.params;
       const userId = req.user?.userId;
-
       const transaction = await this.transactionService.getTransaction(Number(userId), Number(transactionId));
-
       return res.status(200).json(transaction);
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 
-  async createTransaction(req: Request, res: Response): Promise<Response> {
+  async createTransaction(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { title, amount, type, categoryId, transactionDate, description } = req.body;
-
       const userId = req.user?.userId;
 
       const transaction = await this.transactionService.createTransaction({
@@ -52,23 +47,23 @@ export class TransactionController {
 
       return res.status(201).json(transaction);
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 
-  async deleteTransaction(req: Request, res: Response): Promise<Response> {
+  async deleteTransaction(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { transactionId } = req.params;
       const userId = req.user?.userId;
 
       await this.transactionService.deleteTransaction(Number(userId), Number(transactionId));
-      return res.status(201).json({ message: "Transação excluída" });
+      return res.status(200).json({ message: "Transação excluída" });
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 
-  async updateTransaction(req: Request, res: Response): Promise<Response> {
+  async updateTransaction(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { title, amount, type, categoryId, transactionDate, description } = req.body;
       const { transactionId } = req.params;
@@ -83,11 +78,11 @@ export class TransactionController {
         transactionDate: new Date(transactionDate),
         type: type as TransactionTypes,
         userId: Number(userId),
-      })
+      });
 
-      return res.status(201).json({ message: "Transação editada" }); 
+      return res.status(200).json({ message: "Transação editada" });
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 }
