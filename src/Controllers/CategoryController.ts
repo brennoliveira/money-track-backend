@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { CategoryService } from "../Services";
 
 export class CategoryController {
@@ -8,41 +8,39 @@ export class CategoryController {
     this.categoryService = new CategoryService();
   }
 
-  //No Route Yet
-  async findCategoryById(req: Request, res: Response): Promise<Response> {
+  // Ainda sem rota definida
+  async findCategoryById(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const { categoryId, userId } = req.body;
+      const { categoryId } = req.params;
+      const userId = req.user?.userId;
 
-      const category = await this.categoryService.findCategoryById(categoryId, userId);
-
+      const category = await this.categoryService.findCategoryById(Number(categoryId), Number(userId));
       return res.status(200).json(category);
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 
-  async findCategoriesByUser(req: Request, res: Response): Promise<Response> {
+  async findCategoriesByUser(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const userId = req.user?.userId;
 
       const categories = await this.categoryService.findCategoriesByUser(Number(userId));
-
       return res.status(200).json(categories);
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 
-  async createCategory(req: Request, res: Response): Promise<Response> {
+  async createCategory(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { name } = req.body;
       const userId = req.user?.userId;
 
       const category = await this.categoryService.createCategory(name, Number(userId));
-
       return res.status(201).json(category);
     } catch (error) {
-      return res.status(500).json({ error });
+      next(error);
     }
   }
 }
