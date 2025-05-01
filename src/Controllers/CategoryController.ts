@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { CategoryService } from "../Services";
+import { CreatedResponse, OkResponse } from "../Responses";
 
 export class CategoryController {
   private readonly categoryService: CategoryService;
@@ -15,7 +16,7 @@ export class CategoryController {
       const userId = req.user?.userId;
 
       const category = await this.categoryService.findCategoryById(Number(categoryId), Number(userId));
-      return res.status(200).json(category);
+      return res.status(200).json(new OkResponse(category));
     } catch (error) {
       next(error);
     }
@@ -26,7 +27,7 @@ export class CategoryController {
       const userId = req.user?.userId;
 
       const categories = await this.categoryService.findCategoriesByUser(Number(userId));
-      return res.status(200).json(categories);
+      return res.status(200).json(new OkResponse(categories));
     } catch (error) {
       next(error);
     }
@@ -38,7 +39,7 @@ export class CategoryController {
       const userId = req.user?.userId;
 
       const category = await this.categoryService.createCategory(name, Number(userId));
-      return res.status(201).json(category);
+      return res.status(200).json(new CreatedResponse(category));
     } catch (error) {
       next(error);
     }

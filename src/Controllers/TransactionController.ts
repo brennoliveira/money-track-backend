@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { TransactionService } from "../Services";
 import { TransactionTypes } from "../Models/enums";
+import { CreatedResponse, OkResponse } from "../Responses";
 
 export class TransactionController {
   private readonly transactionService: TransactionService;
@@ -13,7 +14,7 @@ export class TransactionController {
     try {
       const userId = req.user?.userId;
       const transactions = await this.transactionService.getUserTransactions(Number(userId));
-      return res.status(200).json(transactions);
+      return res.status(200).json(new OkResponse(transactions));
     } catch (error) {
       next(error);
     }
@@ -24,7 +25,7 @@ export class TransactionController {
       const { transactionId } = req.params;
       const userId = req.user?.userId;
       const transaction = await this.transactionService.getTransaction(Number(userId), Number(transactionId));
-      return res.status(200).json(transaction);
+      return res.status(200).json(new OkResponse(transaction));
     } catch (error) {
       next(error);
     }
@@ -45,7 +46,7 @@ export class TransactionController {
         description,
       });
 
-      return res.status(201).json(transaction);
+      return res.status(201).json(new CreatedResponse(transaction));
     } catch (error) {
       next(error);
     }
@@ -57,7 +58,7 @@ export class TransactionController {
       const userId = req.user?.userId;
 
       await this.transactionService.deleteTransaction(Number(userId), Number(transactionId));
-      return res.status(200).json({ message: "Transação excluída" });
+      return res.status(204).send();
     } catch (error) {
       next(error);
     }
@@ -80,7 +81,7 @@ export class TransactionController {
         userId: Number(userId),
       });
 
-      return res.status(200).json({ message: "Transação editada" });
+      return res.status(204).send();
     } catch (error) {
       next(error);
     }
