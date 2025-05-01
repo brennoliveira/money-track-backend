@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { CategoryService } from "../Services";
 import { CreatedResponse, OkResponse } from "../Responses";
+import { HTTP_STATUS } from "../constants";
 
 export class CategoryController {
   private readonly categoryService: CategoryService;
@@ -16,7 +17,7 @@ export class CategoryController {
       const userId = req.user?.userId;
 
       const category = await this.categoryService.findCategoryById(Number(categoryId), Number(userId));
-      return res.status(200).json(new OkResponse(category));
+      return res.status(HTTP_STATUS.SUCCESS.OK).json(new OkResponse(category));
     } catch (error) {
       next(error);
     }
@@ -27,7 +28,7 @@ export class CategoryController {
       const userId = req.user?.userId;
 
       const categories = await this.categoryService.findCategoriesByUser(Number(userId));
-      return res.status(200).json(new OkResponse(categories));
+      return res.status(HTTP_STATUS.SUCCESS.OK).json(new OkResponse(categories));
     } catch (error) {
       next(error);
     }
@@ -39,7 +40,7 @@ export class CategoryController {
       const userId = req.user?.userId;
 
       const category = await this.categoryService.createCategory(name, Number(userId));
-      return res.status(200).json(new CreatedResponse(category));
+      return res.status(HTTP_STATUS.SUCCESS.OK).json(new CreatedResponse(category));
     } catch (error) {
       next(error);
     }
