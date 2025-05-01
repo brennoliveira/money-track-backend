@@ -1,0 +1,7 @@
+import { AppSuccess } from "../Utils";
+
+export class CreatedResponse<T> extends AppSuccess<T> {
+  constructor(public readonly data: T) {
+    super(data, 201);
+  }
+}
