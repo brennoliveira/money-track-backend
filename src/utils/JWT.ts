@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { JwtPayload } from '../Models/types';
 
 export class JWTService {
-  private readonly SECRET_KEY = process.env.SECRET_KEY || '';
+  private readonly SECRET_KEY = process.env.SECRET_KEY || '123456789';
 
   generateToken(userId: number): string {
     const payload = { userId };
