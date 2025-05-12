@@ -12,6 +12,52 @@ const transactionController = new TransactionController();
 
 //POST
 router.post('/users', userController.createUser.bind(userController));
+/**
+ * @openapi
+ * /api/login:
+ *   post:
+ *     summary: User login
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                 statusCode:
+ *                    type: number
+ *                    example: 200
+ *                 success:
+ *                    type: boolean
+ *       401:
+ *         description: Invalid e-mail or password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: string
+ */
 router.post('/login', userController.login.bind(userController));
 
 //GET
