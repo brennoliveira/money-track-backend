@@ -1,7 +1,7 @@
 import { BadRequestError, InternalServerError, NotFoundError, UnauthorizedError } from '../Errors';
 import { UserDTO } from '../Models/entities';
 import { CategoryRepository, UserRepository } from '../Repositories';
-import { AppError, BcryptService, JWTService } from '../Utils';
+import { AppError, BcryptService, JWTService } from '../Util';
 
 export class UserService {
   private readonly userRepository     : UserRepository;

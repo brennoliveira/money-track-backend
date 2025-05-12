@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { UserRepository } from "../../Repositories";
 import { UserService } from "../UserService";
-import { AppError } from "../../Utils";
+import { AppError } from "../../Util";
 
 jest.mock("../../Repositories/UserRepository");
 

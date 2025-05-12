@@ -1,4 +1,4 @@
-import { AppSuccess } from "../Utils";
+import { AppSuccess } from "../Util";
 
 export class OkResponse<T> extends AppSuccess<T>{
   constructor(data: T) {

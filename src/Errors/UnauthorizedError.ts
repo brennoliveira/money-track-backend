@@ -1,4 +1,4 @@
-import { AppError } from "../Utils";
+import { AppError } from "../Util";
 
 export class UnauthorizedError extends AppError {
   constructor(message = "Unauthorized") {

@@ -1,7 +1,7 @@
 import { InternalServerError, NotFoundError } from '../Errors';
 import { TransactionDTO } from '../Models/entities';
 import { TransactionRepository } from '../Repositories';
-import { AppError } from '../Utils';
+import { AppError } from '../Util';
 
 export class TransactionService {
   private readonly transactionRepository: TransactionRepository;

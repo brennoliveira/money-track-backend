@@ -1,7 +1,7 @@
 import { CategoryDTO } from "../Models/entities";
 import { CategoryRepository } from "../Repositories";
 import { InternalServerError, NotFoundError } from "../Errors";
-import { AppError } from "../Utils";
+import { AppError } from "../Util";
 
 export class CategoryService {
   private readonly categoryRepository: CategoryRepository;

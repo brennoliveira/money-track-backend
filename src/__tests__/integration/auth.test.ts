@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import app from '../..'
 import { UserDTO } from '../../Models/entities'
-import { BcryptService } from '../../Utils'
+import { BcryptService } from '../../Util'
 
 const prisma = new PrismaClient()
 const hashService = new BcryptService();
