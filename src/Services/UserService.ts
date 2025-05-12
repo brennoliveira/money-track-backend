@@ -1,4 +1,4 @@
-import { BadRequestError, InternalServerError, NotFoundError } from '../Errors';
+import { BadRequestError, InternalServerError, NotFoundError, UnauthorizedError } from '../Errors';
 import { UserDTO } from '../Models/entities';
 import { CategoryRepository, UserRepository } from '../Repositories';
 import { AppError, BcryptService, JWTService } from '../Utils';
@@ -40,11 +40,11 @@ export class UserService {
 
   async login(email: string, password: string): Promise<string> {
     try {
-      const user = await this.findUserByEmail(email);
-      if (!user) throw new BadRequestError('Invalid e-mail or password');
+      const user = await this.userRepository.findUserByEmail(email);
+      if (!user) throw new UnauthorizedError('Invalid e-mail or password');
 
       const isPasswordValid = await this.bcryptService.compareValues(password, String(user.password));
-      if (!isPasswordValid) throw new BadRequestError('Invalid e-mail or password');
+      if (!isPasswordValid) throw new UnauthorizedError('Invalid e-mail or password');
 
       const token = this.jwtService.generateToken(Number(user.id));
       return token;
