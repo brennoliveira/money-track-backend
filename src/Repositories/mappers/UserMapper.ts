@@ -14,7 +14,6 @@ export class UserMapper implements Mapper<UserDTO, UserPrisma> {
       id        : persistence.id,
       name      : persistence.name,
       email     : persistence.email,
-      balance   : persistence.balance,
       password  : persistence.password,
       createdAt : persistence.createdAt,
       updatedAt : persistence.updatedAt

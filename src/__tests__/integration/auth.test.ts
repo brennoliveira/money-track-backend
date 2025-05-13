@@ -14,7 +14,6 @@ describe('Auth Integration', () => {
     name: 'Test User',
     email: 'testuser@example.com',
     password: 'password123',
-    balance: 0,
   }
 
   beforeAll(async () => {

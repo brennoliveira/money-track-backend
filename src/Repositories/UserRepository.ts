@@ -24,7 +24,6 @@ export class UserRepository extends Repositoy implements IUserRepository {
         name,
         email,
         password,
-        balance: 0,
       }
     });
     return this.userMapper.toDTO(user);
@@ -41,20 +40,6 @@ export class UserRepository extends Repositoy implements IUserRepository {
       return user ? this.userMapper.toDTO(user) : null;
     } catch (error) {
       throw new InternalServerError(`${error}`); 
-    }
-  }
-
-  async getUserBalance(userId: number): Promise<number> {
-    try {
-      const user = await this.repository.findUnique({
-        where: {
-          id: userId,
-        }
-      });
-
-      return user?.balance ?? 0;
-    } catch (error) {
-      throw new InternalServerError(`${error}`);
     }
   }
 }

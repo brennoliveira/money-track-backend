@@ -5,7 +5,6 @@ export class UserDTO implements IUserDTO{
   name       : string;
   email      : string;
   password?  : string;
-  balance    : number;
   createdAt? : Date;
   updatedAt? : Date;
 
@@ -14,7 +13,6 @@ export class UserDTO implements IUserDTO{
     this.name      = user.name;
     this.email     = user.email;
     this.password  = user.password;
-    this.balance   = user.balance;
     this.createdAt = user.createdAt;
     this.updatedAt = user.updatedAt;
   }
