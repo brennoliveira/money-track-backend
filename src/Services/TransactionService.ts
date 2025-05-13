@@ -1,15 +1,13 @@
 import { InternalServerError, NotFoundError } from '../Errors';
 import { TransactionDTO } from '../Models/entities';
-import { TransactionRepository, UserRepository } from '../Repositories';
-import { AppError, CheckAmount } from '../Util';
+import { TransactionRepository } from '../Repositories';
+import { AppError } from '../Util';
 
 export class TransactionService {
   private readonly transactionRepository: TransactionRepository;
-  private readonly userRepository: UserRepository;
 
   constructor() {
     this.transactionRepository = new TransactionRepository();
-    this.userRepository = new UserRepository();
   }
 
   async getUserTransactions(userId: number): Promise<TransactionDTO[] | null> {
@@ -36,7 +34,6 @@ export class TransactionService {
       const transaction = await this.transactionRepository.createTransaction(data);
       if (!transaction) throw new InternalServerError('Transaction not created');
 
-      await this.userRepository.updateBalance(transaction.userId, CheckAmount(transaction.amount, transaction.type));
       return transaction;
     } catch (err) {
       throw new InternalServerError('Error creating transaction');

@@ -5,5 +5,4 @@ export interface IUserRepository {
   findUserByEmail(email: string): Promise<UserDTO | null>;
   findUserById(userId: number): Promise<UserDTO | null>;
   getUserBalance(userId: number): Promise<number>;
-  updateBalance(userId: number, amount: number): Promise<undefined>;
 }

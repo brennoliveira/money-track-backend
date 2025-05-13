@@ -63,7 +63,7 @@ router.post('/login', userController.login.bind(userController));
 //GET
 router.get('/users', userController.findUserByEmail.bind(userController));
 router.get('/users/me', authenticateToken, userController.findUserById.bind(userController));
-router.get(`/balance`, authenticateToken, userController.getUserBalance.bind(userController));
+router.get(`/users/me/balance`, authenticateToken, userController.getUserBalance.bind(userController));
 
 //-------User Routes--------//
 

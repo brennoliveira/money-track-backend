@@ -1,19 +1,22 @@
 import { BadRequestError, InternalServerError, NotFoundError, UnauthorizedError } from '../Errors';
 import { UserDTO } from '../Models/entities';
-import { CategoryRepository, UserRepository } from '../Repositories';
+import { TransactionTypes } from '../Models/enums';
+import { CategoryRepository, TransactionRepository, UserRepository } from '../Repositories';
 import { AppError, BcryptService, JWTService } from '../Util';
 
 export class UserService {
-  private readonly userRepository     : UserRepository;
-  private readonly categoryRepository : CategoryRepository;
-  private readonly bcryptService      : BcryptService;
-  private readonly jwtService         : JWTService;
+  private readonly userRepository        : UserRepository;
+  private readonly categoryRepository    : CategoryRepository;
+  private readonly transactionRepository : TransactionRepository;
+  private readonly bcryptService         : BcryptService;
+  private readonly jwtService            : JWTService;
 
   constructor(){
-    this.userRepository     = new UserRepository();
-    this.categoryRepository = new CategoryRepository();
-    this.bcryptService      = new BcryptService();
-    this.jwtService         = new JWTService();
+    this.userRepository        = new UserRepository();
+    this.categoryRepository    = new CategoryRepository();
+    this.transactionRepository = new TransactionRepository();
+    this.bcryptService         = new BcryptService();
+    this.jwtService            = new JWTService();
   }
 
   async createUser(name: string, email: string, password: string): Promise<UserDTO> {
@@ -82,7 +85,16 @@ export class UserService {
 
   async getUserBalance(userId: number): Promise<number> {
     try {
-      const balance = await this.userRepository.getUserBalance(userId);
+      const transactions = await this.transactionRepository.getUserTransactions(userId);
+      if (!transactions) throw new NotFoundError('Transactions not found');
+      
+      const balance = transactions.reduce((acc, transaction) => {
+        if (transaction.type === TransactionTypes.INCOME) {
+          return acc + transaction.amount;
+        } else {
+          return acc - transaction.amount;
+        }
+      }, 0);
 
       if (balance === null || balance === undefined)
         throw new NotFoundError('Balance not found');

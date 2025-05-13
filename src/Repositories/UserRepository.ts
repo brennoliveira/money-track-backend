@@ -57,28 +57,4 @@ export class UserRepository extends Repositoy implements IUserRepository {
       throw new InternalServerError(`${error}`);
     }
   }
-
-  async updateBalance(userId: number, amount: number): Promise<undefined> {
-    try {
-      const user = await this.repository.findUnique({ where: { id: userId } });
-      if (user) {
-        await this.repository.update({
-          where: { id: userId },
-          data: { balance: amount + user.balance }
-        });
-      }
-    } catch (error) {
-      throw new InternalServerError(`${error}`);
-    }
-  }
-
-  // Exemplo de função para consultar SQL dinâmico
-  async customQueryExample(userId: number) {
-    const query = await this.createQuery('queries/customQuery.sql', [
-      { key: '$userId', value: userId },
-    ]);
-
-    // Processar o resultado da query (dependerá do formato da consulta SQL)
-    return query;
-  }
 }

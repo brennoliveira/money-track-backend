@@ -54,7 +54,7 @@ export class UserController {
     try {
       const userId = req.user?.userId;
       const balance = await this.userService.getUserBalance(Number(userId));
-      return res.status(HTTP_STATUS.SUCCESS.OK).json(new OkResponse(`R$${balance}`));
+      return res.status(HTTP_STATUS.SUCCESS.OK).json(new OkResponse({ balance }));
     } catch (error) {
       next(error);
     }
