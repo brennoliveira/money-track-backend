@@ -1,11 +1,15 @@
-import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
 import fs from 'fs/promises';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
+import { prisma } from '../database/prisma';
 
 export class Repositoy {
   protected prisma: PrismaClient;
 
   constructor() {
-    this.prisma = new PrismaClient();  // Aqui cria a instância corretamente
+    this.prisma = prisma;
   }
 
   protected getRepository() {

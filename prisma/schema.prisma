@@ -1,16 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
 }
 
 model Users {
@@ -20,8 +13,8 @@ model Users {
   password     String
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  transactions Transactions[]
   categories   Categories[]
+  transactions Transactions[]
 }
 
 model Categories {
@@ -29,23 +22,21 @@ model Categories {
   name         String
   createdAt    DateTime       @default(now())
   userId       Int
+  user         Users          @relation(fields: [userId], references: [id])
   transactions Transactions[]
-
-  user Users @relation(fields: [userId], references: [id])
 }
 
 model Transactions {
-  id              Int      @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   title           String
   amount          Float
   type            String
   description     String?
-  transactionDate DateTime @default(now())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  transactionDate DateTime   @default(now())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
   userId          Int
   categoryId      Int
-
-  user     Users      @relation(fields: [userId], references: [id])
-  category Categories @relation(fields: [categoryId], references: [id])
+  category        Categories @relation(fields: [categoryId], references: [id])
+  user            Users      @relation(fields: [userId], references: [id])
 }
