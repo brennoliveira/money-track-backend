@@ -12,6 +12,10 @@ export const swaggerOptions = swaggerJSDoc({
       {
         url: 'http://localhost:3000',
         description: 'Servidor Local'
+      },
+      {
+        url: 'https://money-track-backend-production.up.railway.app/',
+        description: 'Servidor de Produção'
       }
     ]
   },

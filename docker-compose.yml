@@ -1,17 +1,11 @@
 version: "3.9"
 
 services:
-  db:
-    image: postgres:16
-    container_name: moneytrack_db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: moneytrack
+  api:
+    build: .
+    container_name: moneytrack_api
+    restart: always
     ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+      - "3000:3000"
+    env_file:
+      - .env
