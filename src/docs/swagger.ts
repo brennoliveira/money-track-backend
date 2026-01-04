@@ -10,14 +10,25 @@ export const swaggerOptions = swaggerJSDoc({
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Servidor Local'
-      },
-      {
-        url: 'https://money-track-backend-production.up.railway.app/',
+        url: 'http://168.75.86.2:3000',
         description: 'Servidor de Produção'
-      }
-    ]
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
+
   apis: ['src/routes/**/*.ts']
 })
