@@ -6,16 +6,16 @@ export const swaggerOptions = swaggerJSDoc({
     info: {
       title: 'MoneyTrack API',
       version: '1.0.0',
-      description: 'API para controle financeiro pessoal'
+      description: 'API documentation for MoneyTrack application',
     },
     servers: [
       {
         url: 'http://168.75.86.2:3000',
-        description: 'Servidor de Produção'
+        description: 'Production Server'
       },
       {
         url: 'http://localhost:3000',
-        description: 'Servidor Local'
+        description: 'Local Host'
       }
     ],
     components: {
