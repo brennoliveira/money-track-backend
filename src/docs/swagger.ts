@@ -13,10 +13,10 @@ export const swaggerOptions = swaggerJSDoc({
         url: 'http://168.75.86.2:3000',
         description: 'Servidor de Produção'
       },
-      // {
-      //   url: 'http://localhost:3000',
-      //   description: 'Servidor Local'
-      // }
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor Local'
+      }
     ],
     components: {
       securitySchemes: {
@@ -27,11 +27,6 @@ export const swaggerOptions = swaggerJSDoc({
         },
       },
     },
-    security: [
-      {
-        bearerAuth: [],
-      },
-    ],
   },
 
   apis: [
