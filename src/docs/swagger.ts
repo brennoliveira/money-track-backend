@@ -30,5 +30,8 @@ export const swaggerOptions = swaggerJSDoc({
     ],
   },
 
-  apis: ['src/routes/**/*.ts']
+  apis: [
+    'src/Routes/**/*.ts',
+    'src/Routes/**/*.js',
+  ]
 })
