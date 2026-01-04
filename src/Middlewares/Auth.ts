@@ -7,11 +7,11 @@ const jwtService = new JWTService();
 export function authenticateToken(req: Request, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       throw new UnauthorizedError("Access denied: No Authorization header provided.");
     }
 
-    const [, token] = authHeader.split(" ");
+    const token = authHeader.replace("Bearer ", "").trim();
     if (!token) {
       throw new UnauthorizedError("Access denied: No token provided.");
     }
